@@ -1,4 +1,2 @@
-Minha primmeira Nota
-	geral	testando tudo
-Minha segunda Nota
-	tecnologia	python e zika
+Minha Nota	tech	Testando
+Minha segunda nota	nota2	TEstando nota 2
