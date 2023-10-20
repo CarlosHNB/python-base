@@ -1,2 +1,4 @@
-teste
-Testando a tecnologia
+Minha primmeira Nota
+	geral	testando tudo
+Minha segunda Nota
+	tecnologia	python e zika
