@@ -25,6 +25,27 @@ __license__= "Unlicense"
 
 import os
 import sys
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+
+# Instância do log
+log = logging.Logger("carlos",)
+
+# Level do log
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+
+# Formatação
+fmt = logging.Formatter(
+    '%(asctime)s %(name)s %(levelname)s '
+    'l:%(lineno)d f:%(filename)s: %(message)s'
+)
+ch.setFormatter(fmt)
+
+# Destino
+log.addHandler(ch)
+
 
 # os.environ (dict like object <- se comporta como um dict)
 # os.environ["KEY"]
@@ -37,11 +58,11 @@ for arg in sys.argv[1:]: # Todos os itens que começam do item 1 até o último.
         key, value = arg.split("=") # Recebe os argumentos e desempacota.
     
     except ValueError as e:
-        # TODO: Loggin
-        print(f"[ERROR] {str(e)}")
-        print("You need to use `=`")
-        print(f"You passed {arg}")
-        print("try with --key=value")
+        log.error(
+            "You need to use `=`, you passed %s, try --key=value: %s",
+            arg, str(e)
+        )
+
         sys.exit()
         
     #lstrip("-") -> Remove todos os caracteres do parenteses, no lado esquerdo.
