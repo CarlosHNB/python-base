@@ -32,17 +32,27 @@ import sys
 arguments = {"lang": None,"count": 1,}
 
 for arg in sys.argv[1:]: # Todos os itens que começam do item 1 até o último.
-    # TODO: Tratar ValueError
-    key, value = arg.split("=") # Recebe os argumentos e desempacota.
     
+    try:
+        key, value = arg.split("=") # Recebe os argumentos e desempacota.
+    
+    except ValueError as e:
+        # TODO: Loggin
+        print(f"[ERROR] {str(e)}")
+        print("You need to use `=`")
+        print(f"You passed {arg}")
+        print("try with --key=value")
+        sys.exit()
+        
     #lstrip("-") -> Remove todos os caracteres do parenteses, no lado esquerdo.
     key = key.lstrip("-").strip() # .strip() remove os espaços, evitando erros.
     value = value.strip()
 
+    # Validação
     if key not in arguments:
         print(f"Invalid Option `{key}`")    
         sys.exit()
-   
+    
     arguments[key] = value
     
 current_language = arguments["lang"]
@@ -66,5 +76,18 @@ msg = {
     "fr_FR": "Bonjour, Monde!",
 }
 
-print(msg[current_language] * int(arguments["count"]))
+"""
+try com valor default
+message = msg.get(current_language)
+
+"""
+
+try:
+    message = msg[current_language]
+except KeyError as e:
     
+    print(f"Language {str(e)} is invalid, choose from {list(msg.keys())}")
+    sys.exit()
+
+  
+print(message * int(arguments["count"]))
